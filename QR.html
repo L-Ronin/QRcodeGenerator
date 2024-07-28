@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>www.Qrcode.com</title>
+    <script src="https://cdn.jsdelivr.net/npm/qrcode/build/qrcode.min.js"></script>
+    <style>
+        *{
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;     
+        }
+        body{
+            background-color: #171923;
+            font-family: sans-serif;
+        }
+        .content{
+            height: 100vh;
+            width: 100%;
+            /*display: flex;
+            justify-content: center;
+            align-items: center;*/
+            display: grid;
+            place-items: center;
+            position: relative;
+        }
+        .box{
+            height: 150px;
+            width: 550px;
+            background-color: #eee;
+            border-radius:10px ;
+            box-shadow: 0px 0px 5px 5px #333;
+        }
+        .inpt{
+            width: 360px;
+            padding: 10px;
+            border-radius: 7px;
+            border: 1px;
+            font-size: 1rem;
+            font-family: sans-serif;
+            margin: 20px;
+        }
+        .inpt:focus{
+            border: 1px solid red;
+        }
+        .btn{
+            padding: 10px;
+            border-radius: 10px;
+            background: green;
+            color: white;
+            font-weight: bold;
+            border: 1px;
+        }
+        a{
+            text-decoration: none;
+        }
+        .diff{
+            height: 300px;
+            width: 300px;
+            background-color: #eee;
+            border-radius:10px ;
+            box-shadow: 0px 0px 5px 5px #333;
+            z-index: 2;
+        }
+        .BtnDel{
+            background: red;
+            position: relative;
+            bottom: 0;
+            margin: 20px 10px;
+            padding: 10px;
+            border-radius: 10px;
+            color: white;
+            border: red;
+            cursor: pointer;
+        }
+        .BtnDownload{
+            background: green;
+            position: relative;
+            bottom: 0;
+            margin: 20px 10px;
+            padding: 10px;
+            border-radius: 10px;
+            color: white;
+            border: green;
+            cursor: pointer; 
+        }
+        @media (max-width: 600px) {
+
+        .box{
+            height: 200px;
+            width: 450px;
+            background-color: #eee;
+            border-radius:10px ;
+            box-shadow: 0px 0px 5px 5px #333;
+        }
+        }
+    </style>
+</head>
+<body>
+<center>
+    <div class="content">
+        <div class="box">
+            <h1>Type a text you want to transform</h1>
+            <input type="text" id="text" class="inpt" placeholder="www.google.com" autocomplete="off">
+            <a href="#" class="btn">create</a>
+            <br><br>
+            <!-- <canvas id="qrcode" class="qrcode"></canvas> -->
+        </div>
+    </div>
+</center>
+
+
+
+
+
+    <script>
+
+        let create = document.querySelector(".btn");
+        let content = document.querySelector('.content');
+        let box = document.querySelector('.box');
+
+
+        create.addEventListener("click",function(){
+
+            //Hide box 
+
+            box.style.display = "none";
+            
+            // Create Element => div
+
+            const dif = document.createElement("div");
+            dif.className = "diff";
+
+            // Create Element => canvas
+
+            const canvas = document.createElement("canvas");
+            canvas.className = "qrcode ";
+            canvas.getElementsByTagName("qrcode");
+            
+            //style canvas
+
+            canvas.style.height = "250px";
+            canvas.style.width = "250px";
+
+            // Create Element => BtnDel
+
+            const BtnDel = document.createElement("button");
+            BtnDel.className = "BtnDel";
+            BtnDel.innerHTML = "Delete"
+
+            // Create Element => BtnDel
+
+            // const BtnDownload = document.createElement("button");
+            // BtnDownload.className = "BtnDownload";
+            // BtnDownload.innerHTML = "Download"
+
+             //Show Element in content
+
+            content.appendChild(dif);
+            dif.appendChild(canvas);
+            dif.appendChild(BtnDel);
+            // dif.appendChild(BtnDownload);
+
+            //Create a qrcode
+
+            var text = document.getElementById("text").value;
+            // var canvas = document.getElementById("qrcode");
+            QRCode.toCanvas(canvas, text, { width: 250, height: 250 }, function (error) {
+                if (error) console.error(error);
+                console.log('QRCode is active');
+            });
+
+            BtnDel.addEventListener("click",function(){
+
+                //Show box 
+
+                box.style.display = "block";
+
+                //Remove diff
+
+                dif.remove();
+
+                }); 
+
+            // BtnDownload.addEventListener("click",function(canvas){
+            //         // var link = document.createElement('a');
+            //         BtnDownload.href = canvas.toDataURL('image/png');
+            //         BtnDownload.download = 'qrcode.png';
+            //         BtnDownload.click();
+
+            // })
+        
+            
+            });
+
+
+           
+
+    </script>
+</body>
+</html>
+
